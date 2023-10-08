@@ -23,7 +23,7 @@ jobs:
       - name: Import Vault Secrets
         uses: hashicorp/vault-action@v2
         with:
-          url: http://144.24.128.195:8200
+          url: ${{ secrets.VAULT_URL }}
           token: ${{ secrets.VAULT_TOKEN }}
           secrets: |
             secret/data/dropbox-service artifactory-url | ARTIFACTORY_URL
