@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-@Configuration
+@Configuration("dropbox-restconfig")
 @RequiredArgsConstructor
 public class RestConfiguration {
 
