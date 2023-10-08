@@ -1,0 +1,73 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+
+name: Java CI with Gradle and Docker - Merge Build & Publish
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Import Vault Secrets
+        uses: hashicorp/vault-action@v2
+        with:
+          url: http://144.24.128.195:8200
+          token: ${{ secrets.VAULT_TOKEN }}
+          secrets: |
+            secret/data/dropbox-service artifactory-url | ARTIFACTORY_URL
+            secret/data/dropbox-service artifactory-username | ARTIFACTORY_USERNAME
+            secret/data/dropbox-service artifactory-password | ARTIFACTORY_PASSWORD
+            secret/data/dropbox-service github-token | GITHUB_TOKEN
+            secret/data/dropbox-service sonar-token | SONAR_TOKEN
+            secret/data/dropbox-service sonar-host-url | SONAR_HOST_URL
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+      - name: Cache SonarQube packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Gradle packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+      - name: Build
+        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        with:
+          arguments: clean build
+      - name: Sonarqube Scan
+        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        env:
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
+        with:
+          arguments: sonar
+      - name: Publish to Sonatype
+        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        env:
+          ARTIFACTORY_URL: ${{ env.ARTIFACTORY_URL }}
+          ARTIFACTORY_USERNAME: ${{ env.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ env.ARTIFACTORY_PASSWORD }}
+          GITHUB_VERSION: $GITHUB_SHA
+        with:
+          arguments: publish
