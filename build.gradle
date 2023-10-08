@@ -22,10 +22,10 @@ sonar {
 repositories {
     mavenCentral()
     maven {
-        url "${artifactory_url}"
+        url "${ARTIFACTORY_URL}"
         credentials {
-            username "${artifactory_username}"
-            password "${artifactory_password}"
+            username "${ARTIFACTORY_USERNAME}"
+            password "${ARTIFACTORY_PASSWORD}"
         }
         allowInsecureProtocol true
     }
@@ -64,16 +64,16 @@ publishing {
         maven(MavenPublication) {
             groupId 'com.shankarsan'
             artifactId 'dropbox-service'
-            version '1.1-SNAPSHOT_' + "${github_version}"
+            version '1.1-SNAPSHOT_' + "${GITHUB_VERSION}"
             from components.java
         }
     }
     repositories {
         maven {
-            url "${artifactory_url}"
+            url "${ARTIFACTORY_URL}"
             credentials {
-                username "${artifactory_username}"
-                password "${artifactory_password}"
+                username "${ARTIFACTORY_USERNAME}"
+                password "${ARTIFACTORY_PASSWORD}"
             }
             allowInsecureProtocol true
         }
