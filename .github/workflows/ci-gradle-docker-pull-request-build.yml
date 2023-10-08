@@ -58,5 +58,6 @@ jobs:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
+          GITHUB_VERSION: ${{ github.sha }}
         with:
           arguments: sonar
