@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Map;
 import java.util.Optional;
 
-@Configuration
+@Configuration("dropbox-appconfig")
 @ConfigurationProperties(prefix = "app")
 @RequiredArgsConstructor
 @Data
