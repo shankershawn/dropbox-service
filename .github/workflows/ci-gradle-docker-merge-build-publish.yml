@@ -26,11 +26,11 @@ jobs:
           url: ${{ secrets.VAULT_URL }}
           token: ${{ secrets.VAULT_TOKEN }}
           secrets: |
-            secret/data/dropbox-service artifactory-url | ARTIFACTORY_URL
-            secret/data/dropbox-service artifactory-username | ARTIFACTORY_USERNAME
-            secret/data/dropbox-service artifactory-password | ARTIFACTORY_PASSWORD
-            secret/data/dropbox-service github-token | GITHUB_TOKEN
-            secret/data/dropbox-service sonar-token | SONAR_TOKEN
+            secret/data/dropbox-service artifactory-url | ARTIFACTORY_URL ;
+            secret/data/dropbox-service artifactory-username | ARTIFACTORY_USERNAME ;
+            secret/data/dropbox-service artifactory-password | ARTIFACTORY_PASSWORD ;
+            secret/data/dropbox-service github-token | GITHUB_TOKEN ;
+            secret/data/dropbox-service sonar-token | SONAR_TOKEN ;
             secret/data/dropbox-service sonar-host-url | SONAR_HOST_URL
       - uses: actions/checkout@v3
       - name: Set up JDK 11
