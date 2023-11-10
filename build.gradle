@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'com.shankarsan'
-version '1.1_' + System.getenv("GITHUB_VERSION") + '-SNAPSHOT'
+version '1.0_' + System.getenv("GITHUB_VERSION") + '-SNAPSHOT'
 
 java {
     targetCompatibility = 11
