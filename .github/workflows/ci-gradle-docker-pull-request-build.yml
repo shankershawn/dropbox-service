@@ -27,6 +27,9 @@ jobs:
           url: ${{ secrets.VAULT_URL }}
           token: ${{ secrets.VAULT_TOKEN }}
           secrets: |
+            secret/data/dropbox-service artifactory-url | ARTIFACTORY_URL ;
+            secret/data/dropbox-service artifactory-username | ARTIFACTORY_USERNAME ;
+            secret/data/dropbox-service artifactory-password | ARTIFACTORY_PASSWORD ;
             secret/data/dropbox-service github-token | GITHUB_TOKEN ;
             secret/data/dropbox-service sonar-token | SONAR_TOKEN ;
             secret/data/dropbox-service sonar-host-url | SONAR_HOST_URL
@@ -52,6 +55,10 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: clean build
+        env:
+          ARTIFACTORY_URL: ${{ env.ARTIFACTORY_URL }}
+          ARTIFACTORY_USERNAME: ${{ env.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ env.ARTIFACTORY_PASSWORD }}
       - name: Sonarqube Scan
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         env:
