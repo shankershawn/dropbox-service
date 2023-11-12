@@ -64,7 +64,7 @@ publishing {
         maven(MavenPublication) {
             groupId 'com.shankarsan'
             artifactId 'dropbox-service'
-            version '1.1_' + System.getenv("GITHUB_VERSION") + '-SNAPSHOT'
+            version '1.0.0_' + System.getenv("GITHUB_VERSION")
             from components.java
         }
     }
