@@ -55,6 +55,10 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: clean build
+        env:
+          ARTIFACTORY_URL: ${{ env.ARTIFACTORY_URL }}
+          ARTIFACTORY_USERNAME: ${{ env.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ env.ARTIFACTORY_PASSWORD }}
       - name: Sonarqube Scan
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         env:

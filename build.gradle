@@ -22,7 +22,7 @@ sonar {
 repositories {
     mavenCentral()
     maven {
-        url "${ARTIFACTORY_URL}"
+        url System.getenv("ARTIFACTORY_URL")
         credentials {
             username System.getenv("ARTIFACTORY_USERNAME")
             password System.getenv("ARTIFACTORY_PASSWORD")
@@ -70,7 +70,7 @@ publishing {
     }
     repositories {
         maven {
-            url "${ARTIFACTORY_URL}"
+            url System.getenv("ARTIFACTORY_URL")
             credentials {
                 username System.getenv("ARTIFACTORY_USERNAME")
                 password System.getenv("ARTIFACTORY_PASSWORD")
