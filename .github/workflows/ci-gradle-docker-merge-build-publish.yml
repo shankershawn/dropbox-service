@@ -55,25 +55,15 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: clean build
-        env:
-          ARTIFACTORY_URL: ${{ env.ARTIFACTORY_URL }}
-          ARTIFACTORY_USERNAME: ${{ env.ARTIFACTORY_USERNAME }}
-          ARTIFACTORY_PASSWORD: ${{ env.ARTIFACTORY_PASSWORD }}
       - name: Sonarqube Scan
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         env:
-          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
           GITHUB_VERSION: ${{ github.sha }}
         with:
           arguments: sonar
       - name: Publish to Sonatype
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         env:
-          ARTIFACTORY_URL: ${{ env.ARTIFACTORY_URL }}
-          ARTIFACTORY_USERNAME: ${{ env.ARTIFACTORY_USERNAME }}
-          ARTIFACTORY_PASSWORD: ${{ env.ARTIFACTORY_PASSWORD }}
           GITHUB_VERSION: ${{ github.sha }}
         with:
           arguments: publish
