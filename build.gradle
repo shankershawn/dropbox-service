@@ -64,7 +64,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId group
-            artifactId artifactId
+            artifactId 'dropbox-service'
             version version
             from components.java
         }
