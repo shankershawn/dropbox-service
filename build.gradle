@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'com.shankarsan'
-version '1.0.0_' + System.getenv("GITHUB_VERSION")
+version '1.0.' + System.getenv("PR_NUMBER") + '_' + System.getenv("GITHUB_VERSION")
 
 java {
     targetCompatibility = 17
@@ -62,9 +62,9 @@ test {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId 'com.shankarsan'
+            groupId group
             artifactId 'dropbox-service'
-            version '1.0.0_' + System.getenv("GITHUB_VERSION")
+            version version
             from components.java
         }
     }
