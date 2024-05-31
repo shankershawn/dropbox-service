@@ -6,6 +6,7 @@ import com.shankarsan.dropbox.service.constants.CommonConstants;
 import com.shankarsan.dropbox.service.dto.RefreshTokenDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,8 +23,10 @@ import java.util.Optional;
 @Slf4j
 public class DropboxServiceImpl implements DropboxService {
 
+    @Qualifier("dropboxShortLivedTokenRestTemplate")
     private final RestTemplate dropboxShortLivedTokenRestTemplate;
 
+    @Qualifier("dropboxDownloadRestTemplate")
     private final RestTemplate dropboxDownloadRestTemplate;
 
     private final ApplicationConfiguration applicationConfiguration;
