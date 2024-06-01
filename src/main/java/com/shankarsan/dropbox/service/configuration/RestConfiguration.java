@@ -26,7 +26,7 @@ public class RestConfiguration {
 
     private final ApplicationConfiguration applicationConfiguration;
 
-    @Bean
+    @Bean(name = "dropboxShortLivedTokenRestTemplate")
     public RestTemplate dropboxShortLivedTokenRestTemplate() {
         return new RestTemplateBuilder()
                 .rootUri(applicationConfiguration.getUrl(CommonConstants.DROPBOX_API))
@@ -35,7 +35,7 @@ public class RestConfiguration {
                 .build();
     }
 
-    @Bean
+    @Bean(name = "dropboxDownloadRestTemplate")
     public RestTemplate dropboxDownloadRestTemplate() {
         return new RestTemplateBuilder()
                 .rootUri(applicationConfiguration.getUrl(CommonConstants.DROPBOX_CONTENT))
